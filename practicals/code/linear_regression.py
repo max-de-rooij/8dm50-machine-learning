@@ -16,3 +16,18 @@ def lsq(X, y):
     beta = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, y))
 
     return beta
+
+def mse(X, y_true, beta):
+    '''
+    measures the average squared difference between
+    the predicted values and true values
+    '''
+    # add column of ones to X
+    ones = np.ones((len(X), 1))
+    X = np.concatenate((ones, X), axis=1)
+ 
+    y_pred = np.dot(X,beta)
+ 
+    MSE = np.square(np.subtract(y_true,y_pred)).mean() 
+    return MSE
+

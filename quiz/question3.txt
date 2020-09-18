@@ -1,0 +1,10 @@
+import numpy as np
+
+def question3(a):
+    A = np.zeros((a,a))
+    for d in range(1,a-1):
+        for e in range(1,a-1):
+            A[d,e]=1
+    print(A)
+
+question3(4)

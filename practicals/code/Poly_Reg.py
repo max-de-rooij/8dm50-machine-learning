@@ -2,6 +2,6 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import make_pipeline
 
-def PolynomialRegression(degree=2, **kwargs):
+def Poly_Regression(degree=4, **arg):
     return make_pipeline(PolynomialFeatures(degree),
-                         LinearRegression(**kwargs))
+                         LinearRegression(**arg))

@@ -1,9 +1,11 @@
 import numpy as np
 from PIL import Image
 from sklearn.feature_extraction.image import extract_patches_2d
-import gryds
+from gryds import *
 import time
 import matplotlib.pyplot as plt
+import imageio
+
 
 
 def load_data(impaths_all, test=False):
@@ -21,14 +23,14 @@ def load_data(impaths_all, test=False):
 
     # Load as numpy array and normalize between 0 and 1
     for im_path in impaths_all:
-        images.append(np.array(Image.open(im_path)) / 255.)
+        images.append(imageio.imread(im_path) / 255.)
         mask_path = im_path.replace('images', 'mask').replace('.tif', '_mask.gif')
-        masks.append(np.array(Image.open(mask_path)) / 255.)
+        masks.append(imageio.imread(mask_path) / 255.)
         if not test:
             seg_path = im_path.replace('images', '1st_manual').replace('training.tif', 'manual1.gif')
         else:
             seg_path = im_path.replace('images', '1st_manual').replace('test.tif', 'manual1.gif')
-        segmentations.append(np.array(Image.open(seg_path)) / 255.)
+        segmentations.append(imageio.imread(seg_path) / 255.)
 
     # Convert to numpy arrays with channels last and return
     return np.array(images), np.expand_dims(np.array(masks), axis=-1), np.expand_dims(np.array(segmentations), axis=-1)

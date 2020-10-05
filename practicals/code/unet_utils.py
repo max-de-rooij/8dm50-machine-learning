@@ -129,6 +129,7 @@ def datagenerator(images, segmentations, patch_size, patches_per_im, batch_size,
         for idx in range(nr_batches):
             x_batch = x[idx * batch_size:(idx + 1) * batch_size]
             y_batch = y[idx * batch_size:(idx + 1) * batch_size]
+
             ## BEGIN EXERCISE
             if augment_brightness:
                 delta = np.random.rand(1)
@@ -146,5 +147,6 @@ def datagenerator(images, segmentations, patch_size, patches_per_im, batch_size,
                     intpl = gryds.MultiChannelInterpolator(x_batch[jdx])
                     x_batch[jdx] = intpl.transform(bspline)
             ## END EXERCISE
+            
             yield x_batch, y_batch
 

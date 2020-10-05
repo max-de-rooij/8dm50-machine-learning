@@ -104,7 +104,7 @@ def extract_patches(images, segmentations, patch_size, patches_per_im, seed):
 
 
 # Create a very simple datagenerator
-def datagenerator(images, segmentations, patch_size, patches_per_im, batch_size):
+def datagenerator(images, segmentations, patch_size, patches_per_im, batch_size, augment_brightness=False, augment_bspline=False):
     """
     Simple data-generator to feed patches in batches to the network.
     To extract different patches each epoch, steps_per_epoch in fit_generator should be equal to nr_batches.
@@ -129,5 +129,22 @@ def datagenerator(images, segmentations, patch_size, patches_per_im, batch_size)
         for idx in range(nr_batches):
             x_batch = x[idx * batch_size:(idx + 1) * batch_size]
             y_batch = y[idx * batch_size:(idx + 1) * batch_size]
+            ## BEGIN EXERCISE
+            if augment_brightness:
+                delta = np.random.rand(1)
+                delta = delta-0.5
+                x_batch = x_batch[:]+delta
+            
+            if augment_bspline:
+                for jdx in range(x_batch.shape[0]):
+                    b_grid = np.random.rand(2, 3, 3)
+                    b_grid -= 0.5
+                    b_grid /= 10
+
+                    
+                    bspline = gryds.BSplineTransformation(b_grid)
+                    intpl = gryds.MultiChannelInterpolator(x_batch[jdx])
+                    x_batch[jdx] = intpl.transform(bspline)
+            ## END EXERCISE
             yield x_batch, y_batch
 

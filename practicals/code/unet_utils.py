@@ -104,7 +104,7 @@ def extract_patches(images, segmentations, patch_size, patches_per_im, seed):
 
 
 # Create a very simple datagenerator
-def datagenerator(images, segmentations, patch_size, patches_per_im, batch_size):
+def datagenerator(images, segmentations, patch_size, patches_per_im, batch_size, augment_brightness=False, augment_bspline=False):
     """
     Simple data-generator to feed patches in batches to the network.
     To extract different patches each epoch, steps_per_epoch in fit_generator should be equal to nr_batches.
